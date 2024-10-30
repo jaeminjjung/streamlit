@@ -54,19 +54,25 @@ In the meantime, below is an example of what you can do with just a few lines of
 # fig.update_layout(margin = dict(t=50, l=25, r=25, b=25))
 # fig.show()
 
+# Load gapminder data and filter for year 2007
+df = px.data.gapminder().query("year == 2007")
 
-volume = [350, 220, 170, 150, 50]
-labels = ['Liquid\n volume: 350k', 'Savoury\n volume: 220k',
-         'Sugar\n volume: 170k', 'Frozen\n volume: 150k',
-         'Non-food\n volume: 50k']
-color_list = ['#0f7216', '#b2790c', '#ffe9a3',
-             '#f9d4d4', '#d35158', '#ea3033']
+# Create the treemap with Plotly Express
+fig_treemap = px.treemap(
+    df,
+    path=[px.Constant("world"), "continent", "country"],
+    values="pop",
+    color="lifeExp",
+    hover_data=["iso_alpha"],
+    color_continuous_scale="RdBu",
+    color_continuous_midpoint=np.average(df["lifeExp"], weights=df["pop"]),
+    )
 
-plt.rc('font', size=14)
-squarify.plot(sizes=volume, label=labels,
-             color=color_list, alpha=0.7)
-plt.axis('off')
-st.pyplot()
+# Update layout for better presentation
+fig_treemap.update_layout(margin=dict(t=50, l=25, r=25, b=25))
+
+# Display the treemap using Streamlit
+st.plotly_chart(fig_treemap)
 
 # Add histogram data
 x1 = np.random.randn(200) - 2
