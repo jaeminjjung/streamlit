@@ -14,41 +14,41 @@ forums](https://discuss.streamlit.io).
 In the meantime, below is an example of what you can do with just a few lines of code:
 """
 
-# num_points = st.slider("Number of points in spiral", 1, 10000, 1100)
-# num_turns = st.slider("Number of turns in spiral", 1, 300, 31)
+num_points = st.slider("Number of points in spiral", 1, 10000, 1100)
+num_turns = st.slider("Number of turns in spiral", 1, 300, 31)
 
-# indices = np.linspace(0, 1, num_points)
-# theta = 2 * np.pi * num_turns * indices
-# radius = indices
+indices = np.linspace(0, 1, num_points)
+theta = 2 * np.pi * num_turns * indices
+radius = indices
 
-# x = radius * np.cos(theta)
-# y = radius * np.sin(theta)
+x = radius * np.cos(theta)
+y = radius * np.sin(theta)
 
-# df = pd.DataFrame({
-#     "x": x,
-#     "y": y,
-#     "idx": indices,
-#     "rand": np.random.randn(num_points),
-# })
+df = pd.DataFrame({
+    "x": x,
+    "y": y,
+    "idx": indices,
+    "rand": np.random.randn(num_points),
+})
 
-# st.altair_chart(alt.Chart(df, height=700, width=700)
-#     .mark_point(filled=True)
-#     .encode(
-#         x=alt.X("x", axis=None),
-#         y=alt.Y("y", axis=None),
-#         color=alt.Color("idx", legend=None, scale=alt.Scale()),
-#         size=alt.Size("rand", legend=None, scale=alt.Scale(range=[1, 150])),
-#     ))
+st.altair_chart(alt.Chart(df, height=700, width=700)
+    .mark_point(filled=True)
+    .encode(
+        x=alt.X("x", axis=None),
+        y=alt.Y("y", axis=None),
+        color=alt.Color("idx", legend=None, scale=alt.Scale()),
+        size=alt.Size("rand", legend=None, scale=alt.Scale(range=[1, 150])),
+    ))
 
 
 
-df = px.data.gapminder().query("year == 2007")
-fig = px.treemap(df, path=[px.Constant("world"), 'continent', 'country'], values='pop',
-                  color='lifeExp', hover_data=['iso_alpha'],
-                  color_continuous_scale='RdBu',
-                  color_continuous_midpoint=np.average(df['lifeExp'], weights=df['pop']))
-fig.update_layout(margin = dict(t=50, l=25, r=25, b=25))
-fig.show()
+# df = px.data.gapminder().query("year == 2007")
+# fig = px.treemap(df, path=[px.Constant("world"), 'continent', 'country'], values='pop',
+#                   color='lifeExp', hover_data=['iso_alpha'],
+#                   color_continuous_scale='RdBu',
+#                   color_continuous_midpoint=np.average(df['lifeExp'], weights=df['pop']))
+# fig.update_layout(margin = dict(t=50, l=25, r=25, b=25))
+# fig.show()
 
 
 # # Add histogram data
